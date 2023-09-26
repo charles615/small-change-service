@@ -14,6 +14,9 @@ public class User {
         this.salt = salt;
     }
 
+    public User() {
+    }
+
     public int getId() {
         return id;
     }
