@@ -31,39 +31,54 @@ public class UserController {
         return "1111";
     }
 
-    @RequestMapping("/signup")
-    public JsonResult<Void> signup(User user) {
-        JsonResult<Void> result = new JsonResult<>();
-
-        try {
-            userService.signup(user);
-            result.setState(200);
-        } catch (UsernameIsUsedException e) {
-            result.setState(2001);
-        }
-        return result;
-    }
 
 
-    @RequestMapping("/login")
-    public JsonResult<User> login(String username, String password, HttpSession session) {
+    @PostMapping("/login")
+    public boolean login2(String username, String password, HttpSession session) {
 
-        JsonResult<User> result = new JsonResult<>();
         try {
             User data = userService.login(username, password);
-            result.setState(200);
+
             session.setAttribute("id", data.getId());
             session.setAttribute("username", data.getUsername());
         } catch (PasswordIsNotCorrectException e) {
-            result.setState(3001);
-        } catch(UsernameNotFoundException e) {
-            result.setState(3002);
+            return false;
         }
-        return result;
+        return true;
     }
 
 
 
+//    @RequestMapping("/signup")
+//    public JsonResult<Void> signup(User user) {
+//        JsonResult<Void> result = new JsonResult<>();
+//
+//        try {
+//            userService.signup(user);
+//            result.setState(200);
+//        } catch (UsernameIsUsedException e) {
+//            result.setState(2001);
+//        }
+//        return result;
+//    }
+//
+//
+//    @GetMapping("/login")
+//    public JsonResult<User> login(String username, String password, HttpSession session) {
+//
+//        JsonResult<User> result = new JsonResult<>();
+//        try {
+//            User data = userService.login(username, password);
+//            result.setState(200);
+//            session.setAttribute("id", data.getId());
+//            session.setAttribute("username", data.getUsername());
+//        } catch (PasswordIsNotCorrectException e) {
+//            result.setState(3001);
+//        } catch(UsernameNotFoundException e) {
+//            result.setState(3002);
+//        }
+//        return result;
+//    }
 
 
 }
